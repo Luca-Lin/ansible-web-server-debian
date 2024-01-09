@@ -11,7 +11,7 @@
     # ---------- OS ---------- #
     # REQUIRED
     # Your linux user
-    linux_user: user_test
+    linux_user: root
 
     # Path of your websites in your user directory
     # /home/{{ linux_user }}/www/{{ website_path }}/{{ domain }}
@@ -39,43 +39,28 @@
     http_server: nginx
     # ---------- /HTTP server ---------- #
 
-    # ---------- MariaDB ---------- #
-    # REQUIRED
-    # Your MariaDB super-user
-    mariadb_super_user_username: super_user
-    mariadb_super_user_password: test
-
-    # REQUIRED
-    # Your prod MariaDB user
-    mariadb_prod_username: user_prod
-    mariadb_prod_password: test
-
-    # MariaDB parameters
-    mariadb_collation: utf8mb4_unicode_ci
-    mariadb_encoding: utf8mb4
-    mariadb_host: localhost
-    mariadb_port: 3306
-    # ---------- /MariaDB ---------- #
-
-    # ---------- PhpMyAdmin ---------- #
-    # PhpMyAdmin Path
-    phpmyadmin_path: phpmyadmin
-
-    # REQUIRED
-    phpmyadmin_blowfish_secret: '3K2*%<+a^#^!)1?ti~Pr$#Tzmp_$t5Mj'
-    # ---------- /PhpMyAdmin ---------- #
-
     # ---------- Versions ---------- #
     # PHP version. Supported: 8.0, 8.1, 8.2
     version_php: "8.2"
 
-    # MariaDB version. Supported: 10.5, 10.6, 10.7, 10.8, 10.9, 10.10
-    version_mariadb: "10.10"
+    # ---------- MySQL ---------- #
+    # MySQL root password
+    mysql_user_home: /root
+    mysql_user_name: root
+    mysql_user_password: root
 
-    # PhpMyAdmin version
-    # See available versions here: https://www.phpmyadmin.net/files/
-    version_phpmyadmin: "5.2.0"
-    # ---------- /Versions ---------- #
+    # MySQL database configuration
+    mysql_port: "3306"
+    mysql_bind_address: '0.0.0.0'
+    mysql_datadir: /var/lib/mysql
+
+    # MySQL databases
+    mysql_databases:
+      - name: laravel
+        collation: utf8_general_ci
+        encoding: utf8
+        replicate: 1
+    # ---------- /MySQL ---------- #
 
   # Roles
   roles:
@@ -86,7 +71,7 @@
     - nginx-step2 # Conf Nginx
     - apache-step1 # Install Apache
     - apache-step2 # Conf Apache
-    - mariadb
-    - phpmyadmin
+    - role: geerlingguy.mysql
+      become: yes
     - end
 ...
