@@ -10,8 +10,8 @@
     force: yes
   when: http_server != "apache"
 
-- name: Change the timezone - Put {{ linux_timezone }}
-  shell: sudo timedatectl set-timezone {{ linux_timezone }}
+# - name: Change the timezone - Put {{ linux_timezone }}
+#   shell: sudo timedatectl set-timezone {{ linux_timezone }}
 
 - name: Update and upgrade
   apt:
