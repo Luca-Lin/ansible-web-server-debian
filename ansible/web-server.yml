@@ -69,8 +69,6 @@
     - php
     - nginx-step1 # Install Nginx
     - nginx-step2 # Conf Nginx
-    - apache-step1 # Install Apache
-    - apache-step2 # Conf Apache
     - role: geerlingguy.mysql
       become: yes
     - end
